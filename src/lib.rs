@@ -11,29 +11,31 @@
 ///
 /// ## Usage Example
 /// ```rust
-/// use actix_web::{web, App, HttpServer};
-/// use actix_ipquery::{IPQuery, IPQueryStore};
+/// use actix_ipquery::{IPInfo, IPQuery, IPQueryStore};
+/// use actix_web::{App, HttpServer};
+///
+/// #[actix_web::main]
+/// async fn main() {
+///     HttpServer::new(|| App::new().wrap(IPQuery::new(Store).finish()))
+///         .bind("127.0.0.1:8080")
+///         .unwrap()
+///         .run()
+///         .await
+///         .unwrap()
+/// }
 ///
 /// #[derive(Clone)]
-/// struct MyStore;
-///
-/// impl IPQueryStore for MyStore {
-///     fn store(&self, ip_info: ipapi::IPInfo) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<(), std::io::Error>> + Send>> {
+/// struct Store;
+/// impl IPQueryStore for Store {
+///     fn store(
+///         &self,
+///         ip_info: IPInfo,
+///     ) -> std::pin::Pin<
+///         Box<dyn std::future::Future<Output = Result<(), std::io::Error>> + Send + 'static>,
+///     > {
 ///         println!("{:?}", ip_info);
 ///         Box::pin(async { Ok(()) })
 ///     }
-/// }
-///
-/// #[actix_web::main]
-/// async fn main() -> std::io::Result<()> {
-///     HttpServer::new(|| {
-///         App::new()
-///             .wrap(IPQuery::new(MyStore).finish())
-///             .route("/", web::get().to(|| async { "Hello, world!" }))
-///     })
-///     .bind("127.0.0.1:8080")?
-///     .run()
-///     .await
 /// }
 /// ```
 use ipapi::query_ip;
