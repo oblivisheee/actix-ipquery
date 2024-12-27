@@ -147,7 +147,7 @@ where
                     )))
                 }
             };
-            ip_query_clone.store.store(ip_info)?;
+            ip_query_clone.store.store(ip_info).await?;
             Ok(res)
         })
     }
@@ -155,7 +155,7 @@ where
 
 /// Define the IPQueryStore trait
 pub trait IPQueryStore: Send + Sync + Clone {
-    fn store(&self, ip_info: IPInfo) -> Result<(), std::io::Error>;
+    async fn store(&self, ip_info: IPInfo) -> Result<(), std::io::Error>;
 }
 
 #[cfg(test)]
