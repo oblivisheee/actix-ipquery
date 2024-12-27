@@ -36,7 +36,7 @@
 ///     .await
 /// }
 /// ```
-use ipapi::{query_ip_with_endpoint, Error as ReqwestError, IPInfo};
+use ipapi::{query_ip, IPInfo};
 use std::future::{ready, Ready};
 
 use actix_web::{
@@ -75,8 +75,8 @@ impl<T: IPQueryStore> IPQuery<T> {
     pub fn finish(&self) -> IPQuery<T> {
         self.clone()
     }
-    async fn query_ip(&self, ip: &str) -> Result<IPInfo, ReqwestError> {
-        query_ip_with_endpoint(ip, &self.endpoint).await
+    async fn query_ip(&self, ip: &str) -> Result<IPInfo, Box<dyn std::error::Error + Send + Sync>> {
+        Ok(query_ip(ip).await?)
     }
 }
 impl<S, B, T> Transform<S, ServiceRequest> for IPQuery<T>
