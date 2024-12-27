@@ -16,7 +16,7 @@ keywords = [
 ]
 categories = ["network-programming"]
 homepage = "https://github.com/oblivisheee/actix-ipquery"
-
+license-file = "LICENSE"
 [dependencies]
 actix-web = "4.9.0"
 futures-util = "0.3.31"
