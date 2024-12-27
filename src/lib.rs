@@ -36,7 +36,8 @@
 ///     .await
 /// }
 /// ```
-use ipapi::{query_ip, IPInfo};
+use ipapi::query_ip;
+pub use ipapi::IPInfo;
 use std::future::{ready, Ready};
 
 use actix_web::{
@@ -48,7 +49,6 @@ use futures_util::future::LocalBoxFuture;
 /// The IPQuery struct that implements actix-web's middleware.
 #[derive(Clone)]
 pub struct IPQuery<T: IPQueryStore> {
-    endpoint: String,
     store: T,
     forwarded_for: bool,
 }
@@ -56,16 +56,11 @@ impl<T: IPQueryStore> IPQuery<T> {
     /// Create a new IPQuery middleware
     pub fn new(store: T) -> IPQuery<T> {
         IPQuery {
-            endpoint: "https://api.ipquery.io/".to_owned(),
             store,
             forwarded_for: false,
         }
     }
-    /// Set the endpoint for the IP query
-    pub fn endpoint(&mut self, endpoint: &str) -> &mut Self {
-        self.endpoint = endpoint.to_owned();
-        self
-    }
+
     /// Use the `X-Forwarded-For` header for IP address extraction
     pub fn forwarded_for(&mut self, y: bool) -> &mut Self {
         self.forwarded_for = y;
