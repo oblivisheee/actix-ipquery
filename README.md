@@ -6,7 +6,6 @@
 
 ## Features
 
-- Query IP information using a specified endpoint.
 - Store IP information using a custom store.
 - Option to use the `X-Forwarded-For` header for IP address extraction.
 
