@@ -5,15 +5,7 @@ edition = "2021"
 authors = ["Oleg Pogoraev <merizo.labs@gmail.com>"]
 description = "A Rust library to retrieve info about IP of incoming requests for actix-web."
 readme = "README.md"
-keywords = [
-    "ip",
-    "query",
-    "ipquery",
-    "networking",
-    "api",
-    "actix-web",
-    "backend",
-]
+keywords = ["ipquery", "networking", "api", "actix-web", "backend"]
 categories = ["network-programming"]
 homepage = "https://github.com/oblivisheee/actix-ipquery"
 license-file = "LICENSE"
