@@ -1,0 +1,28 @@
+[package]
+name = "actix-ipquery"
+version = "0.1.0"
+edition = "2021"
+authors = ["Oleg Pogoraev <merizo.labs@gmail.com>"]
+description = "A Rust library to retrieve info about IP of incoming requests for actix-web."
+readme = "README.md"
+keywords = [
+    "ip",
+    "query",
+    "ipquery",
+    "networking",
+    "api",
+    "actix-web",
+    "backend",
+]
+categories = ["network-programming"]
+homepage = "https://github.com/oblivisheee/actix-ipquery"
+
+[dependencies]
+actix-web = "4.9.0"
+futures-util = "0.3.31"
+ipapi = { git = "https://github.com/oblivisheee/ipapi-rust.git", version = "0.1.0", features = [
+    "error",
+] }
+
+[dev-dependencies]
+tokio = { version = "1.42.0", features = ["macros", "rt"] }
