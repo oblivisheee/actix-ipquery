@@ -32,9 +32,9 @@ use actix_ipquery::{IPQuery, IPQueryStore};
 struct MyStore;
 
 impl IPQueryStore for MyStore {
-    fn store(&self, ip_info: ipapi::IPInfo) -> Result<(), std::io::Error> {
+    fn store(&self, ip_info: ipapi::IPInfo) -> Result<(), std::pin::Pin<Box<dyn std::future::Future<Output = Result<(), std::io::Error>> + Send>> {
         println!("{:?}", ip_info);
-        Ok(())
+        Box::pin(async { Ok(()) })
     }
 }
 
@@ -53,11 +53,10 @@ async fn main() -> std::io::Result<()> {
 
 ## Configuration
 
-You can configure the middleware to use a custom endpoint and the `X-Forwarded-For` header:
+You can configure the middleware to use the `X-Forwarded-For` header:
 
 ```rust
 let ip_query = IPQuery::new(MyStore)
-    .endpoint("https://custom.endpoint/")
     .forwarded_for(true)
     .finish();
 ```

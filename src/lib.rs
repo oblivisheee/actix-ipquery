@@ -18,9 +18,9 @@
 /// struct MyStore;
 ///
 /// impl IPQueryStore for MyStore {
-///     fn store(&self, ip_info: ipapi::IPInfo) -> Result<(), std::io::Error> {
+///     fn store(&self, ip_info: ipapi::IPInfo) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<(), std::io::Error>> + Send>> {
 ///         println!("{:?}", ip_info);
-///         Ok(())
+///         Box::pin(async { Ok(()) })
 ///     }
 /// }
 ///
