@@ -52,7 +52,7 @@ pub struct IPQuery<T: IPQueryStore> {
     store: T,
     forwarded_for: bool,
 }
-impl<T: IPQueryStore> IPQuery<T> {
+impl<T: IPQueryStore + 'static> IPQuery<T> {
     /// Create a new IPQuery middleware
     pub fn new(store: T) -> IPQuery<T> {
         IPQuery {
@@ -155,7 +155,10 @@ where
 
 /// Define the IPQueryStore trait
 pub trait IPQueryStore: Send + Sync + Clone {
-    async fn store(&self, ip_info: IPInfo) -> Result<(), std::io::Error>;
+    fn store(
+        &self,
+        ip_info: IPInfo,
+    ) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<(), std::io::Error>> + Send>>;
 }
 
 #[cfg(test)]
