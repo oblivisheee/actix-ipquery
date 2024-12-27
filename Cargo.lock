@@ -874,7 +874,7 @@ dependencies = [
 [[package]]
 name = "ipapi"
 version = "0.1.0"
-source = "git+https://github.com/oblivisheee/ipapi-rust.git#828c5ada09ae82d6c77c5e328354716024db0406"
+source = "git+https://github.com/oblivisheee/ipapi-rust.git?branch=main#4515859ab058f4710fc15cdb4f4836d8d4e316cd"
 dependencies = [
  "reqwest",
  "serde",
